@@ -1,0 +1,24 @@
+
+ <div class="container">
+    <img id="meulivro" src="/assets/imagens/books.PNG" class="img-fluid" alt="Responsive image">
+</div>
+
+
+<form class="mb-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" formControlName="email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <app-msh-error [isError]="isErrorCampo('email')" mensagem="O campo deve ser preenchido corretamente"></app-msh-error>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" formControlName="senha">
+    </div>
+    <app-msh-error [isError]="isErrorCampo('senha')" mensagem="O campo deve ser preenchido corretamente"></app-msh-error>
+    <button type="submit" class="btn btn-light">Submit</button>
+    <button routerLink="/cadastro"  class="btn btn-light">Cadastre-se</button>
+  </form>
+
+
+  
