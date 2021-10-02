@@ -1,3 +1,11 @@
-<div class="alert alert-danger" *ngIf="isError">
+<!-- <div class="alert alert-danger" *ngIf="isError">
     {{ mensagem }}
+</div> -->
+
+<div *ngIf="isError">
+  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+  <span class="sr-only" >(error)</span>
+  <div class="alert alert-danger" role="alert">
+      {{ mensagem }}
+  </div>
 </div>

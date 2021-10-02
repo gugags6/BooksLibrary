@@ -4,5 +4,25 @@ img{
     width: 95px;
     margin-left: -40px;
     margin-top: 10px;
-    
+
+}
+
+.icones:hover{
+    color: white;
+    cursor: pointer;
+
+}
+
+.link:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.page-link{
+    color:green;
+}
+
+td{
+  color: rgb(0, 0, 0);
+  
 }

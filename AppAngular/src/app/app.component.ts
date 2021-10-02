@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { LoginService } from './shared/services/login.service';
 import { StorageService } from './shared/services/storage.service';
 import { VariaveisGlobaisService } from './shared/services/variaveis-globais.service';
 
@@ -13,23 +14,21 @@ export class AppComponent {
   constructor(
     private router: Router,
     private storage : StorageService,
-    private  globalService : VariaveisGlobaisService
+    private  globalService : VariaveisGlobaisService,
+    private loginService: LoginService
   ) {
     
    }
   title = 'AppAngular';
+  mostrarMenu: boolean = false;
 
   isAuth : boolean = false;
   
 
   ngOnInit() {
-    this.router.events
-    .subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isAuth = (event.url !== '')
-        
-      }
-    });  
-}
+    this.loginService.mostrarMenuEmitter.subscribe(
+      mostrar=>this.mostrarMenu = mostrar
+    );
+  }
 
 }

@@ -1,3 +1,4 @@
+import { LoginService } from 'src/app/shared/services/login.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
+
+  mostrarMenu: boolean = false;
+
+  fazerLogout(){
+    this.loginService.logout();
+  }
 
   ngOnInit() {
+    this.loginService.mostrarMenuEmitter.subscribe(
+      mostrar=>this.mostrarMenu = mostrar
+    );
   }
 
 }

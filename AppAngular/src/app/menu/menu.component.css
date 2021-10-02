@@ -5,6 +5,7 @@
   .navbar-nav>li>a:hover{
     color:blue;
     font: bold;
+    cursor: pointer;
    
 }
 

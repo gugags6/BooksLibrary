@@ -1,3 +1,4 @@
+import { VariaveisGlobaisService } from './shared/services/variaveis-globais.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 
@@ -16,13 +17,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptorService } from './shared/interceptors/auth-interceptor.service';
 import { HttpConfigInterceptor } from './shared/interceptors/http-config-interceptor.service';
 import { CustomErrorHandlerService } from './shared/error/custom-error-handler.service';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AuthGuard } from './guards/auth.guard';
+import { LoginService } from './shared/services/login.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    PaginaNaoEncontradaComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +41,7 @@ import { CustomErrorHandlerService } from './shared/error/custom-error-handler.s
     ToastrModule.forRoot()
   ],
   providers: [  
+   
     {
        provide: HTTP_INTERCEPTORS,
        useClass: AuthInterceptorService,

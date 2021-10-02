@@ -1,0 +1,31 @@
+<div class="container background">
+    <div class="row justify-content-md-center">
+        <div class="col-md-12"></div>
+        <h2>Informações do Livro</h2>
+    </div>
+    <br><br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12"></div>
+        <h3>{{ livro?.nome }}</h3>
+    </div>
+    <br><br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12"></div>
+        <img [src]="livro?.capa">
+    </div>
+    <br><br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12"></div>
+        <h3>{{ livro?.autor?.nome }}</h3>
+    </div>
+    <br><br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12"></div>
+        <h3>{{ livro?.numeroPaginas }} páginas</h3>
+    </div>
+    <br><br>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12"></div>
+        <h3 class="txt">{{ livro?.sinopse }}</h3>
+    </div>
+</div>

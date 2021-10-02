@@ -8,10 +8,11 @@ import { CadastroLivroComponent } from './cadastro-livro/cadastro-livro.componen
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Livro } from '../shared/models/livro';
+import { LivroDetalheComponent } from './livro-detalhe/livro-detalhe.component';
 
 
 @NgModule({
-  declarations: [LivrosComponent,AutoresComponent, CadastroLivroComponent],
+  declarations: [LivrosComponent,AutoresComponent, CadastroLivroComponent, LivroDetalheComponent],
   imports: [
     CommonModule,
     LivrosRoutingModule,

@@ -4,10 +4,27 @@
     margin-left: 300px;
     margin-top: 100px;
     margin-bottom: 0px;
-    
+    position:relative;
+
 }
 
 #cadastroForm{
     margin-top: 100px;
     padding: 5px ;
 }
+
+.label{
+    color: cornsilk;
+}
+
+#jaTenhoCadastro{
+    color: cyan;
+}
+
+#jaTenhoCadastro:hover{
+    color: rgb(0, 255, 115);
+}
+
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }

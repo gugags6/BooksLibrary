@@ -9,6 +9,7 @@ export class Livro {
     numeroPaginas : number;
     editora : string;
     capa : string;
+    sinopse: string;
     autor : Autor;
     usuario : Usuario;
 

@@ -29,7 +29,7 @@ export class AutoresComponent implements OnInit {
     new Pais(12,"Coreia do Norte"),
     new Pais(13,"Coreia do Sul"),
     new Pais(14,"Espanha"),
-    new Pais(15,"Esados Unidos"),
+    new Pais(15,"Estados Unidos"),
     new Pais(16,"Finlândia"),
     new Pais(17,"França"),
     new Pais(18,"Grécia"),

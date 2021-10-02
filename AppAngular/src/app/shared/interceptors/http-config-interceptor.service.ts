@@ -55,6 +55,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 else if (error instanceof HttpErrorResponse && error.status === 403) {
                     this.router.navigate(['/login'], {});                    
                 }
+                else if (error instanceof HttpErrorResponse && error.status === 500) {
+                    this.dialog.showError('Esse email é inválido ou já existe um usuário cadastrado com ele. Tente novamente com outro email');                   
+                }
                 else {
                     this.dialog.showErrorInterceptor(data);
                 }

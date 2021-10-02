@@ -1,5 +1,5 @@
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tokenAuth } from '../models/token-auth';
 import { Router } from '@angular/router';
@@ -20,6 +20,9 @@ export class LoginService {
   private idUser: number;
   private usuario: Usuario;
   private email: string;
+  private usuarioAutenticado: boolean;
+
+  mostrarMenuEmitter = new EventEmitter<boolean>();
 
   constructor(
     private http: HttpClient,
@@ -61,7 +64,9 @@ export class LoginService {
         }
 
         this.storageService.setLocalUser(localUser);
-        this.router.navigate(['/livros/myBooks']);
+        this.usuarioAutenticado = true;
+        this.mostrarMenuEmitter.emit(true);
+        this.router.navigate(['/livros']);
         this.dialogService.showSuccess('Login feito com sucesso!');
 
         this.usuarioService.getUserByEmail(this.email)
@@ -84,6 +89,25 @@ export class LoginService {
     this.storageService.setLocalUser(null);
     this.isAuth = false;
     this.globalService.isAuth = this.isAuth;
+    console.log("Is Auth: " + this.globalService.isAuth)
+    this.mostrarMenuEmitter.emit(false);
+    this.usuarioAutenticado = false;
+    this.router.navigate(['/login']);
+    return this.usuarioAutenticado;
+  }
+
+  usuarioautenticado(){
+    console.log('Acesso de LoginService: ' + this.usuarioAutenticado);
+    console.log('LocalUser: ' + this.storageService.getLocalUser());
+    let localUser: LocalUserModel = this.storageService.getLocalUser();
+    if (localUser == null) {
+      this.isAuth = false;
+    } else{
+      this.isAuth = true;
+      this.mostrarMenuEmitter.emit(true);
+    }
+    //console.log(localUser);
+
     return this.isAuth;
   }
 

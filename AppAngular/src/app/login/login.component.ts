@@ -1,3 +1,4 @@
+import { VariaveisGlobaisService } from './../shared/services/variaveis-globais.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../shared/services/login.service';
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder :  FormBuilder,
               private localStorage:StorageService, 
-              private serviceLogin : LoginService) {
+              private serviceLogin : LoginService,
+              private variaveisGlobais: VariaveisGlobaisService) {
 
    }
 
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
       email : [ '',[Validators.required]  ], 
       senha : [ '' , [Validators.required] ] 
     });
+    console.log("Is Auth: " + this.variaveisGlobais.isAuth)
   }
 
   onSubmit(){

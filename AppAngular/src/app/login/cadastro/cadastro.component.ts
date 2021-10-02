@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Estado } from 'src/app/shared/models/estados';
+import { Estado } from 'src/app/shared/models/estado.model';
 import { FormGroup, FormBuilder, Validators, EmailValidator } from '@angular/forms';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import { Usuario } from 'src/app/shared/models/usuario';
 import { DialogService } from 'src/app/shared/toaster/dialog.service';
 import { LoginService } from 'src/app/shared/services/login.service';
+import { Router } from '@angular/router';
+import { ConsultaCepService } from 'src/app/shared/services/consulta-cep.service';
+import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { FormValidations } from 'src/app/shared/services/form-validations';
+import { Cidade } from 'src/app/shared/models/cidade.model';
+import { DropdownService } from 'src/app/shared/services/dropdown.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -15,59 +22,61 @@ export class CadastroComponent implements OnInit {
 
   cadastroForm : FormGroup;
    user: Usuario = new Usuario();
+   estados: Estado[];
+  cidades: Cidade[];
 
-  estados=[
-    new Estado(1,"Acre"),
-    new Estado(2,"Alagoas"),
-    new Estado(3,"Amapá"),
-    new Estado(4,"Amazonas"),
-    new Estado(5,"Bahia"),
-    new Estado(6,"Ceará"),
-    new Estado(7,"Distrito Federal"),
-    new Estado(8,"Espírito Santo"),
-    new Estado(9,"Goiás"),
-    new Estado(10,"Maranhão"),
-    new Estado(11,"Mato Grosso"),
-    new Estado(12,"Mato Grosso do Sul"),
-    new Estado(13,"Minas Gerais"),
-    new Estado(14,"Pará"),
-    new Estado(15,"Paraíba"),
-    new Estado(16,"Paraná"),
-    new Estado(17,"Pernambuco"),
-    new Estado(18,"Piauí"),
-    new Estado(19,"Rio de Janeiro"),
-    new Estado(20,"Rio Grande do Norte"),
-    new Estado(21,"Rio Grande do Sul"),
-    new Estado(22,"Rondônia"),
-    new Estado(23,"Roraima"),
-    new Estado(24,"Santa Catarina"),
-    new Estado(25,"São Paulo"),
-    new Estado(26,"Sergipe"),
-    new Estado(27,"Tocantins")]
+
 
   constructor(private formBuilder :  FormBuilder,
     private usuarioService: UsuariosService,
+    private router: Router,
     private dialogService: DialogService,
-    private loginService : LoginService) { }
+    private loginService : LoginService,
+    private dropdownService: DropdownService,
+    private cepService: ConsultaCepService) { }
 
   ngOnInit() {
 
-    this.cadastroForm = this.formBuilder.group( { 
-      email : [ '',[Validators.required, Validators.minLength(8), Validators.maxLength(50) ]  ], 
-      senha1: ['', [Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12)])]],
+    this.dropdownService.getEstados()
+    .subscribe(dados=>this.estados = dados);
+
+    this.cadastroForm = this.formBuilder.group( {
+      email : [ '',[Validators.required, Validators.minLength(8), Validators.maxLength(50) ]  ],
+      senha1: ['', [Validators.compose([ Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/),Validators.required, Validators.minLength(6), Validators.maxLength(12)])]],
       senha2 : [ '' , [Validators.required] ] ,
       estado : [ '' , [Validators.required] ] ,
-      cep : [ '' , [Validators.required] ] ,
+      cep : [ '' , [Validators.required, FormValidations.cepValidator] ] ,
       cidade : [ '' , [Validators.required] ] ,
       nome : [ '' , [Validators.required] ] ,
       endereco : [ '' , [Validators.required] ] ,
       dateNascimento : [ '' , [Validators.required] ] ,
     });
+
+    this.cadastroForm.get('cep').statusChanges
+    .pipe(
+      tap(value=>console.log(value)),
+      distinctUntilChanged(),
+      switchMap(status=>status==='VALID' ?
+        this.cepService.consultaCep(this.cadastroForm.get('cep').value)
+        : EMPTY
+      )
+    )
+    .subscribe(dados=>dados?this.populaDados(dados):{});
+
+    this.cadastroForm.get('estado').valueChanges
+        .pipe(
+          tap(estado=>console.log('Novo estado: ', estado)),
+          map(estado=> this.estados.filter(e=>e.sigla===estado)),
+          map(estados=>estados && estados.length>0 ? estados[0].id : EMPTY),
+          switchMap((estadoId: number)=>this.dropdownService.getCidades(estadoId)),
+          tap(console.log)
+        )
+        .subscribe(cidades=> this.cidades = cidades);
   }
 
   onSubmit() {
 
-   
+
       //if (confirm("Deseja prosseguir ?")) {
 
         if (this.cadastroForm.valid) {
@@ -83,19 +92,22 @@ export class CadastroComponent implements OnInit {
           this.user.cidade = this.cadastroForm.get('cidade').value
           this.user.estado = this.cadastroForm.get('estado').value
           this.user.dataDeNascimento = this.cadastroForm.get('dateNascimento').value
-          
+
           this.usuarioService.cadastroUser(this.user)
             .subscribe(
               (dado) => {
                 this.dialogService.showSuccess("Usuário salvo com sucesso");
-                
-               // this.loginService.fazerLogin( 
+                this.router.navigate(['/login']);
+
+               // this.loginService.fazerLogin(
                  // {email:this.user.email,
-                  //senha : this.user.senha} 
+                  //senha : this.user.senha}
                   //);
 
               }
             );
+
+
 
 
         } else {
@@ -104,14 +116,26 @@ export class CadastroComponent implements OnInit {
 
         }
   // }
-    
+
   }
 
   isErrorCampo(nomeCampo){
-    return (!this.cadastroForm.get(nomeCampo).valid && this.cadastroForm.get(nomeCampo).touched ); 
+    return (!this.cadastroForm.get(nomeCampo).valid && this.cadastroForm.get(nomeCampo).touched );
+  }
+
+  isSenhaForte(senha1){
+
+    let r = /^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/;
+
+    console.log('testando regex: ' + r.test(this.cadastroForm.get(senha1).value))
+
+
+    return r.test(this.cadastroForm.get(senha1).value);
+
   }
 
   isSenhaIgual(senha1, senha2){
+
 
     if(this.cadastroForm.get(senha1).value === this.cadastroForm.get(senha2).value){
       return true;
@@ -120,6 +144,18 @@ export class CadastroComponent implements OnInit {
     }
   }
 
- 
+  populaDados(dados){
+
+    this.cadastroForm.patchValue({
+
+       // cep: dados.cep,
+       endereco: dados.logradouro,
+        cidade: dados.localidade,
+        estado: dados.uf
+
+    });
+  }
+
+
 
 }

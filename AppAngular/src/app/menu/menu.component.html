@@ -8,19 +8,19 @@
     <ul class="nav navbar-nav navbar-right">
 
       <li class="nav-item">
-        <a class="nav-link" routerLink="myBooks" routerLinkActive="router-link-active">My Books</a>
+        <a class="nav-link" routerLink="home" [queryParams]="{page:'1'}"routerLinkActive="router-link-active">My Books</a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" routerLink="newBook" routerLinkActive="router-link-active">New Books</a>
+        <a class="nav-link" routerLink="livros/newBook" routerLinkActive="router-link-active">New Books</a>
       </li>
      
       <li class="nav-item">
-        <a class="nav-link " routerLink="authors" routerLinkActive="router-link-active" >New Authors</a>
+        <a class="nav-link " routerLink="livros/authors" routerLinkActive="router-link-active" >New Authors</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link">Logout</a>
+        <a class="nav-link" (click)="fazerLogout()" >Logout</a>
       </li> 
     </ul>
     

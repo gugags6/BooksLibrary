@@ -1,42 +1,48 @@
 <div class="container background">
     <h2><small class="form-text text-muted negrito-padding text-center">Adicionar um Livro</small></h2>
     <form [formGroup]="cadastroBookForm" (ngSubmit)="onSubmit()">
-        
-        <div class="row">
-            <div class="col">
-                <h3><small>Nome do livro</small></h3>
-                <input type="text" class="" formControlName="livro" >
+        <div formGroupName="livro">
+            <div class="row">
+                <div class="col">
+                    <h3><small>Nome do livro</small></h3>
+                    <input type="text" class="" formControlName="nome" >
 
-                <h3><small>N° de páginas</small></h3>
-                <input type="number" class="" formControlName="numPag" >
+                    <h3><small>N° de páginas</small></h3>
+                    <input type="number" class="" formControlName="numPag" >
 
-                <h3><small>Autor</small></h3>
-                <select id="inputState" class="form-control" formControlName="autor" (change)="changeSuit($event.target.value)">
-                    <option selected>Selecione</option>
-                    <option *ngFor="let aut of autores" value= {{aut.id}} >{{ aut.nome }}</option>
-                </select>
+                    <h3><small>Autor</small></h3>
+                    <select id="inputState" class="form-control" formControlName="autor" (change)="changeSuit($event.target.value)">
+                        <option selected>Selecione</option>
+                        <option *ngFor="let aut of autores" value= {{aut.id}} >{{ aut.nome }}</option>
+                    </select>
 
-                <h3><small>Ano de publicação</small></h3>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text"></div>
+                    <h3><small>Ano de publicação</small></h3>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text"></div>
+                        </div>
+                        <input type="number" class="form-control" formControlName="ano" >
                     </div>
-                    <input type="number" class="form-control" formControlName="ano" >
+                </div>
+                <div class="col imagem_principal">
+                    <h3 class="text-center"><small>Imagem Principal *</small></h3>
+                    <label for="imagem-principal">
+                        <img class="" src="../../../../assets/imagens/bookDraw.jpg" #alter>
+                    </label>
+                    <input type="file" id="imagem-principal"  (change)="imagePrincipalSelect($event, alter)" formControlName="image">
                 </div>
             </div>
-            <div class="col imagem_principal">
-                <h3 class="text-center"><small>Imagem Principal *</small></h3>
-                <label for="imagem-principal">
-                    <img class="" src="../../../../assets/imagens/bookDraw.jpg" #alter>
-                </label>
-                <input type="file" id="imagem-principal"  (change)="imagePrincipalSelect($event, alter)" formControlName="image">
-            </div>
-        </div>
 
-        <div >
-            <h3><small>Editora</small></h3>
-            <input type="text" class="form-control" formControlName="editora">
-        </div>
+            <div >
+                <h3><small>Editora</small></h3>
+                <input type="text" class="form-control" formControlName="editora">
+            </div>
+
+            <div >
+                <h3><small>Sinopse</small></h3>
+                <textarea formControlName="sinopse" class="form-control" placeholder="Sinopse" id="sinopse" style="height: 100px"></textarea>
+                
+            </div>
 
             <!-- ### INPUT: a cada tecla pressionada ira verificar se o que foi digitado -->
             <!-- é igual a alguma categoria. -->
@@ -48,7 +54,7 @@
             <!-- ### SELECT à direita: Categorias selecionadas pelo ADM. -->
             <!-- ### BUTTON ( Adicionar nova categoria ): Ira pegar o nome da nova categoria e, -->
             <!-- verificar se a categoria nao existe, caso for false ira ser adicionada na tabela do bd. -->
-            
+        </div>   
         <div class="float-right">
             <button type="submit" class="btn btn-outline-secondary mt-2 mb-5">Salvar</button>
         </div>

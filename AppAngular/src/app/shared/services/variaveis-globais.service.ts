@@ -8,6 +8,6 @@ export class VariaveisGlobaisService {
 
   constructor() { }
 
-  isAuth : boolean = true;
+  isAuth : boolean = false;
   public usuarioLogado : Usuario;
 }
