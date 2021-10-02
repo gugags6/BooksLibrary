@@ -1,0 +1,92 @@
+package com.mvc.projeto.domain;
+
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+public class Autor implements Serializable {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
+	private int id;
+	
+	@Column(unique=true)
+	private String nome;
+	
+	private String nacionalidade;
+	
+	
+	public Autor() {
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+	public String getNacionalidade() {
+		return nacionalidade;
+	}
+
+
+	public void setNacionalidade(String nacionalidade) {
+		this.nacionalidade = nacionalidade;
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Autor other = (Autor) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	
+}
