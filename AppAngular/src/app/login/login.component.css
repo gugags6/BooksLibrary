@@ -9,14 +9,12 @@
 #meulivro{
     height: 50%;
     width: 50%;
-    margin-left: 300px;
-    margin-top: 100px;
-    margin-bottom: 0px;
-    
+    display: block;
+
 }
 
 #myForm{
-    
+
     margin-top: 100px;
     padding: 5px ;
 }

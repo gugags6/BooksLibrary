@@ -1,0 +1,8 @@
+
+.content {
+
+  width: 90vw;
+  margin: 0 auto;
+  min-height: calc(100vh - 56px - 110px );
+  flex: 1 1 auto;
+}

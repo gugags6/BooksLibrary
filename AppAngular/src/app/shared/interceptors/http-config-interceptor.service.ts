@@ -38,7 +38,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             }),
             catchError((error: HttpErrorResponse) => {
                 //console.log('event--->>> ERROR');
-                
+
                 let data: ErrorInterceptorModel;
                 data = {
                     reason: error && error.error && error.error.reason ? error.error.reason : '',
@@ -50,13 +50,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     this.router.navigate(['/login'], {});
                     this.dialog.showError('Email ou senha inválidos!!');
                     //return EMPTY;
-                    //return throwError(error);                   
+                    //return throwError(error);
                 }
                 else if (error instanceof HttpErrorResponse && error.status === 403) {
-                    this.router.navigate(['/login'], {});                    
+                    this.router.navigate(['/login'], {});
+                    this.dialog.showError('Usuário ou senha inválidos. Tente novamente');
                 }
                 else if (error instanceof HttpErrorResponse && error.status === 500) {
-                    this.dialog.showError('Esse email é inválido ou já existe um usuário cadastrado com ele. Tente novamente com outro email');                   
+                    this.dialog.showError('Esse email é inválido ou já existe um usuário cadastrado com ele. Tente novamente com outro email');
                 }
                 else {
                     this.dialog.showErrorInterceptor(data);

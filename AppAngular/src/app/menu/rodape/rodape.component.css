@@ -1,0 +1,36 @@
+.footer {
+  background-color:black;
+  color: white;
+  padding: 20px;
+
+
+
+position: absolute;
+
+
+   width: 100%;
+   z-index: 1;
+
+
+  display: block;
+  clear: both;
+  bottom: 0;
+  height: 70px;
+
+
+
+
+
+
+}
+
+p{
+  text-align:center;
+  
+}
+
+
+
+
+
+

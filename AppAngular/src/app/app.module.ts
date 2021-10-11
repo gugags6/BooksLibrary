@@ -21,6 +21,7 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginService } from './shared/services/login.service';
+import { RodapeComponent } from './menu/rodape/rodape.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoginService } from './shared/services/login.service';
     CadastroComponent,
     LoginComponent,
     MenuComponent,
-    PaginaNaoEncontradaComponent
+    PaginaNaoEncontradaComponent,
+    RodapeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +42,9 @@ import { LoginService } from './shared/services/login.service';
     SharedModule,
     ToastrModule.forRoot()
   ],
-  providers: [  
-   
+
+  providers: [
+
     {
        provide: HTTP_INTERCEPTORS,
        useClass: AuthInterceptorService,
@@ -49,15 +52,15 @@ import { LoginService } from './shared/services/login.service';
      }
      ,
      {
-       provide: HTTP_INTERCEPTORS, 
-       useClass: HttpConfigInterceptor, 
+       provide: HTTP_INTERCEPTORS,
+       useClass: HttpConfigInterceptor,
        multi: true
      }
      ,
      {
-       provide: ErrorHandler, 
+       provide: ErrorHandler,
        useClass: CustomErrorHandlerService
-     }        
+     }
      ],
   bootstrap: [AppComponent]
 })

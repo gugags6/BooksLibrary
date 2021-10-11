@@ -33,7 +33,7 @@ export class LoginService {
     private globalService : VariaveisGlobaisService,
     private dialogService: DialogService) { }
 
-  
+
   fazerLogin(login: { email: string, senha: string }) {
 
     //console.log(login);
@@ -50,7 +50,7 @@ export class LoginService {
 
 
         this.isAuth = true;
-       
+
 
 
         let localUser: LocalUserModel = {
@@ -66,15 +66,15 @@ export class LoginService {
         this.storageService.setLocalUser(localUser);
         this.usuarioAutenticado = true;
         this.mostrarMenuEmitter.emit(true);
-        this.router.navigate(['/livros']);
+        this.router.navigate(['/livros'], {queryParams: {'page': 1}});
         this.dialogService.showSuccess('Login feito com sucesso!');
 
         this.usuarioService.getUserByEmail(this.email)
         .subscribe(
           (dados) => {
-            
+
            this.usuario = dados
-           
+
           }
         );
 

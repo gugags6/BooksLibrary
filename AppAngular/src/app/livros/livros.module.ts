@@ -1,3 +1,4 @@
+import { AppModule } from './../app.module';
 import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -18,18 +19,18 @@ import { LivroDetalheComponent } from './livro-detalhe/livro-detalhe.component';
     LivrosRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports: [CadastroLivroComponent]
 })
 export class LivrosModule implements OnInit{
-  
+
   listaLivros : Livro[] = [];
 
   ngOnInit(): void {
     throw new Error("Method not implemented.");
   }
-  
+
  }
 
 

@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  height: 100%;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -19,13 +20,17 @@ body {
   line-height: 30px;
   color: #777;
   background: #4CAF50;
+
 }
 
-.container {
+.cardy{
   max-width: 400px;
   width: 100%;
   margin: 0 auto;
   position: relative;
+
+
+
 }
 
 #contact input[type="text"],

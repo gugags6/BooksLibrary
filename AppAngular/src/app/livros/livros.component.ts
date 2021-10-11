@@ -23,11 +23,11 @@ export class LivrosComponent implements OnInit {
   usuario: Usuario = new Usuario();
   numPage: number;
   numPages: Number[]=[];
-   page : Page; 
+   page : Page;
    numeroPagina :number;
    p: number = 1;
   collection: number[] ;
-  currentPage: number = 1;
+  currentPage: number;
 
   constructor(
     private livroService : LivroService,
@@ -40,29 +40,28 @@ export class LivrosComponent implements OnInit {
 
   ngOnInit() {
 
+    this.activatedRoute.queryParams.subscribe(
+      (queryParams: any)=>{
+        this.currentPage = queryParams['page'];
+      }
+    );
+
     this.email = this.envService.getLocalUser().email;
 
-  
+
     this.usuarioService.getUserByEmail(this.email)
         .subscribe(
           (dados) => {
-            
+
            this.usuario = dados
            this.id = this.usuario.id;
-           console.log(this.usuario.id)
-           this.listarLivros(this.usuario,0,5)
-           
-         
-          
-           
+           console.log(this.usuario.id);
+           this.listarLivros(this.usuario,this.currentPage-1,5);
+
           }
         );
 
-        this.activatedRoute.queryParams.subscribe(
-          (queryParams: any)=>{
-            this.currentPage = queryParams['page'];
-          }
-        )
+
   }
 
 
@@ -72,7 +71,7 @@ export class LivrosComponent implements OnInit {
     //console.log(this.usuario);
     this.livroService.getLivrosByUserPaginacao(this.usuario.id,pagina,qtdPaginas ).subscribe(
       (dados) => {
-        
+
         //let aut: Autor = new Autor()
        // aut.nacionalidade = dados.nacionalidade;
        // aut.nome = dados.nome;
@@ -88,16 +87,17 @@ export class LivrosComponent implements OnInit {
        console.log(this.listaLivros)
        console.log(this.page)
       }
-    );  
+    );
   }
 
-  deleteBook(idLivro, pagina, qtdPaginas){
+  deleteBook(idLivro){
+    console.log("Id: " + idLivro);
     this.livroService.deleteLivroById(idLivro).subscribe(
      (dados)=> {
        console.log("Produto deletado");
        alert("Livro deletado");
-       this.listarLivros(this.usuario, pagina, qtdPaginas);
-       
+       this.listarLivros(this.usuario, 0,5);
+
      } ,
      erro => {
       console.log(erro)
@@ -109,7 +109,7 @@ export class LivrosComponent implements OnInit {
     this.currentPage = event;
     this.router.navigate(['/livros'], {queryParams: {'page': this.currentPage}});
     this.listarLivros(this.usuario,event-1,5);
-    
+
   }
   previousPage(){
     //TODO implementar as querys param, para pegar sempre a página atual e passar no parametro d page da API
@@ -117,7 +117,7 @@ export class LivrosComponent implements OnInit {
     if(this.currentPage>1){
       this.currentPage--;
     }
-    
+
     this.router.navigate(['/livros'], {queryParams: {'page': this.currentPage}});
     this.listarLivros(this.usuario,this.currentPage-1,5);
   }
@@ -130,9 +130,9 @@ export class LivrosComponent implements OnInit {
     this.listarLivros(this.usuario,this.currentPage-1,5);
   }
 
- 
 
-  
+
+
 
   //updateBook(idLivro){
 
@@ -140,7 +140,7 @@ export class LivrosComponent implements OnInit {
 
 }
 
-   
-  
+
+
 
 

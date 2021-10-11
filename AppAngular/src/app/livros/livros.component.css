@@ -1,6 +1,6 @@
 
 img{
-    height: 150px;
+    height: 110px;
     width: 95px;
     margin-left: -40px;
     margin-top: 10px;
@@ -8,13 +8,13 @@ img{
 }
 
 .icones:hover{
-    color: white;
+    color: rgb(42, 170, 48);
     cursor: pointer;
 
 }
 
 .link:hover{
-    color: white;
+    color: rgb(93, 156, 40);
     cursor: pointer;
 }
 
@@ -24,5 +24,21 @@ img{
 
 td{
   color: rgb(0, 0, 0);
-  
+
 }
+
+h2{
+  color: black;
+}
+
+.content{
+  background-color: rgb(246, 246, 248);
+  margin-bottom: 100px;
+
+
+}
+
+
+
+
+
